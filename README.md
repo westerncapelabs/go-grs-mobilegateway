@@ -1,8 +1,4 @@
-go-grs-mobilegateway
-====================
-
-Mobile Gateway for Grassroot Soccer
-=======
+# Mobile Gateway for Grassroot Soccer
 
 *Author:* Mike Jones [mike@westerncapelabs.com]
 
