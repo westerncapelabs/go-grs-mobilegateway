@@ -1,7 +1,7 @@
 {
-  "name": "vumi-go-skeleton",
+  "name": "go-grs-mobilegateway",
   "version": "0.0.1",
-  "description": "A Vumi Go skeleton application.",
+  "description": "GRS Mobile Gateway",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/westerncapelabs/vumi-go-skeleton"
+    "url": "git://github.com/westerncapelabs/go-grs-mobilegateway"
   },
   "keywords": [
     "vumi",
@@ -26,6 +26,6 @@
     "sms"
   ],
   "author": "Mike Jones <mike@westerncapelabs.com>",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README"
 }
