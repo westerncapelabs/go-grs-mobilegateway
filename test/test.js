@@ -1,1 +1,1 @@
-require("./test-go-grs-mobilegateway.js")
+require("./test-go-grs-mobilegateway.js");
