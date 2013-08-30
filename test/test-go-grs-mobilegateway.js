@@ -32,7 +32,9 @@ describe("When using the USSD line as an un registered user", function() {
         tester = new vumigo.test_utils.ImTester(app.api, {
             custom_setup: function (api) {
                 api.config_store.config = JSON.stringify({
-                    cms_api_root: 'http://qa/api/v1/'
+                    cms_api_root: 'http://qa/api/v1/',
+                    testing: true,
+                    testing_mock_today: [2013,4,8,11,11]
                 });
 
                 var dummy_contact = {
@@ -110,21 +112,146 @@ describe("When using the USSD line as an un registered user", function() {
         p.then(done, done);
     });
 
-    it.skip("declining to know what we said, should say goodbye", function (done) {
+    it("answering female to sex should ask age", function (done) {
         var user = {
-            current_state: 'second_state',
+            current_state: 'reg_sex',
             answers: {
-                first_state: 'Hello world!'
+                first_state: 'reg_sex'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "reg_age",
+            response: "^What is your age\\?[^]" +
+                "1. 11 or younger[^]" +
+                "2. 12[^]" +
+                "3. 13[^]" +
+                "4. 14[^]" +
+                "5. 15[^]" +
+                "6. 16 or older$",
+        });
+        p.then(done, done);
+    });
+
+    it("answering male to sex should skip age and go to ask grade", function (done) {
+        var user = {
+            current_state: 'reg_sex',
+            answers: {
+                first_state: 'reg_sex'
             }
         };
         var p = tester.check_state({
             user: user,
             content: "2",
-            next_state: "end_state",
-            response: "^Thank you and bye bye!$",
-            continue_session: false
+            next_state: "reg_grade",
+            response: "^What is your grade\\?[^]" +
+                "1. Grade 5[^]" +
+                "2. Grade 6[^]" +
+                "3. Grade 7[^]" +
+                "4. Grade 8[^]" +
+                "5. Grade 9[^]" +
+                "6. Grade 10\\+$",
         });
         p.then(done, done);
+    });
+
+    it("as female answering age should ask grade", function (done) {
+        var user = {
+            current_state: 'reg_age',
+            answers: {
+                first_state: 'reg_sex',
+                reg_sex: 'female'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "reg_grade",
+            response: "^What is your grade\\?[^]" +
+                "1. Grade 5[^]" +
+                "2. Grade 6[^]" +
+                "3. Grade 7[^]" +
+                "4. Grade 8[^]" +
+                "5. Grade 9[^]" +
+                "6. Grade 10\\+$",
+        });
+        p.then(done, done);
+    });
+
+    it("answering grade should ask community", function (done) {
+        var user = {
+            current_state: 'reg_grade',
+            answers: {
+                first_state: 'reg_sex',
+                reg_sex: 'female',
+                reg_age: '12'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "3",
+            next_state: "reg_community",
+            response: "^Where do you stay\\?[^]" +
+                "1. Meadowlands[^]" +
+                "2. Dobsonville[^]" +
+                "3. Snake Park[^]" +
+                "4. Bramfischer[^]" +
+                "5. Tshepisong[^]" +
+                "6. Other$",
+        });
+        p.then(done, done);
+    });
+
+    it("female answering community should save and show main menu", function (done) {
+        var user = {
+            current_state: 'reg_community',
+            answers: {
+                first_state: 'reg_sex',
+                reg_sex: 'female',
+                reg_age: '12',
+                reg_grade: '6'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "3",
+            next_state: "reg_save_and_menu",
+            response: "^How can Coach Tumi help you\\?[^]" +
+                "1. Get contact info about local health services or " +
+                "youth centres[^]" +
+                "2. Take a Coach Tumi quiz to test your knowledge about SKILLZ " +
+                "Street$",
+        });
+        p.then(function() {
+            var updated_contact = app.api.contact_store['f953710a2472447591bd59e906dc2c26'];
+            assert.equal(updated_contact['extras-grs_registered'], 'true');
+        }).then(done, done);
+    });
+
+    it("male answering community should save and show main menu", function (done) {
+        var user = {
+            current_state: 'reg_community',
+            answers: {
+                first_state: 'reg_sex',
+                reg_sex: 'male',
+                reg_grade: '6'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "3",
+            next_state: "reg_save_and_menu",
+            response: "^How can Coach Tumi help you\\?[^]" +
+                "1. Get contact info about local health services or " +
+                "youth centres[^]" +
+                "2. Take a Coach Tumi quiz to test your knowledge about SKILLZ " +
+                "Street$",
+        });
+        p.then(function() {
+            var updated_contact = app.api.contact_store['f953710a2472447591bd59e906dc2c26'];
+            assert.equal(updated_contact['extras-grs_registered'], 'true');
+        }).then(done, done);
     });
 
 });
