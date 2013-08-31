@@ -21,6 +21,7 @@ describe("test_api", function() {
 // These are used to mock API reponses
 // EXAMPLE: Response from google maps API
 var test_fixtures_full = [
+    "test/fixtures/quiz.json"
 ];
 
 var tester;
@@ -255,7 +256,7 @@ describe("When using the USSD line as an un registered user", function() {
     });
 });
 
-describe("When using the USSD line as an un registered user", function() {
+describe("When using the USSD line as an registered user", function() {
 
     var fixtures = test_fixtures_full;
     beforeEach(function() {
@@ -309,6 +310,83 @@ describe("When using the USSD line as an un registered user", function() {
                 "youth centres[^]" +
                 "2. Take a Coach Tumi quiz to test your knowledge about SKILLZ " +
                 "Street$"
+        });
+        p.then(done, done);
+    });
+
+    it("choosing quizzes should show list", function (done) {
+        var user = {
+            current_state: 'first_state'
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "quiz_choose",
+            response: (
+                "^Welcome sisi! Take one of Coach Tumi's quizzes![^]" +
+                "1. SKILLZ Street Quiz!$"
+            )
+        });
+        p.then(done, done);
+    });
+});
+
+describe("When using the USSD line as an registered user with no quizzes", function() {
+
+    var fixtures = [
+        'test/fixtures/quiz_none.json'
+    ];
+    beforeEach(function() {
+        tester = new vumigo.test_utils.ImTester(app.api, {
+            custom_setup: function (api) {
+                api.config_store.config = JSON.stringify({
+                    cms_api_root: 'http://qa/api/v1/',
+                    testing: true,
+                    testing_mock_today: [2013,4,8,11,11]
+                });
+
+                var dummy_contact = {
+                    key: "f953710a2472447591bd59e906dc2c26",
+                    surname: "Trotter",
+                    user_account: "test-0-user",
+                    bbm_pin: null,
+                    msisdn: "+1234567",
+                    created_at: "2013-04-24 14:01:41.803693",
+                    gtalk_id: null,
+                    dob: null,
+                    groups: null,
+                    facebook_id: null,
+                    twitter_handle: null,
+                    email_address: null,
+                    name: "Rodney"
+                };
+
+                api.add_contact(dummy_contact);
+                api.update_contact_extras(dummy_contact, {
+                    "grs_registered": "true",
+                    "grs_registered_at": "2013-05-08T09:11:00.000Z"
+                });
+
+                fixtures.forEach(function (f) {
+                    api.load_http_fixture(f);
+                });
+            },
+            async: true
+        });
+    });
+
+    it("choosing quizzes should show none available", function (done) {
+        var user = {
+            current_state: 'first_state'
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "quiz_choose",
+            response: (
+                "^Sorry Sisi! No quizzes this week. Come back again soon![^]" +
+                "1. Main menu$"
+            )
         });
         p.then(done, done);
     });
