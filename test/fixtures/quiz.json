@@ -11,20 +11,20 @@
         },
         "objects": [
             {
-                "active": true,
-                "description": "Welcome to Coach Tumi’s SKILLZ Street Quiz!",
+                "active": true, 
+                "description": "Welcome to Coach Tumi's SKILLZ Street Quiz!",
                 "fr_quiz_id": [
                     {
                         "for_total": 5,
                         "id": 11,
                         "sms": "Hey sisi! SKILLZ Street is a programme for girls. You will play soccer, dance, sing, laugh, make friends, and discuss things that are important to YOU!",
-                        "text": "You got 5/5!! Exclusive kilo! You’re a SKILLZ Street expert! Don’t stop there! Try another Coach Tumi quiz."
+                        "text": "You got 5/5!! Exclusive kilo! You're a SKILLZ Street expert! Don't stop there! Try another Coach Tumi quiz."
                     },
                     {
                         "for_total": 4,
                         "id": 10,
                         "sms": "Hey sisi! SKILLZ Street is a programme for girls. You will play soccer, dance, sing, laugh, make friends, and discuss things that are important to YOU!",
-                        "text": "You got 4/5! You’re almost there! Take the quiz again to get 100%."
+                        "text": "You got 4/5! You're almost there! Take the quiz again to get 100%."
                     },
                     {
                         "for_total": 3,
@@ -60,11 +60,13 @@
                         "question_id": [
                             {
                                 "answer": "Nonsense",
+                                "correct": false,
                                 "id": 31,
                                 "response": "Remember, you can always talk to your SKILLZ Street Coach about important things in your life."
                             },
                             {
                                 "answer": "Fact",
+                                "correct": true,
                                 "id": 30,
                                 "response": "Correct! It's a fact! Remember, you can always talk to your SKILLZ Street Coach about important things in your life."
                             }
@@ -76,11 +78,13 @@
                         "question_id": [
                             {
                                 "answer": "Nonsense",
+                                "correct": false,
                                 "id": 29,
                                 "response": "Aybo wena!! It's a fact! Dial Coach Tumi to get important information about health services and youth centres in Soweto"
                             },
                             {
                                 "answer": "Fact",
+                                "correct": true,
                                 "id": 28,
                                 "response": "Correct! It's a fact! Dial Coach Tumi to get important information about health services and youth centres in Soweto."
                             }
@@ -92,13 +96,15 @@
                         "question_id": [
                             {
                                 "answer": "Nonsense",
+                                "correct": false,
                                 "id": 27,
-                                "response": "Aish, sisi! It's a fact! Your SKILLZ Street Coaches are role models in their communities. Talk with them to learn about how YOU can be a role model in your comm"
+                                "response": "Aish, sisi! It's a fact! Your SKILLZ Street Coaches are role models in their communities. Talk with them to learn about how YOU can be a role model too!"
                             },
                             {
                                 "answer": "Fact",
+                                "correct": true,
                                 "id": 26,
-                                "response": "Correct! It's a fact! Your SKILLZ Street Coaches are role models in their communities. Talk with them to learn about how YOU can be a role model in your communi"
+                                "response": "Correct! It's a fact! Your SKILLZ Street Coaches are role models in their communities. Talk with them to learn about how YOU can be a role model too!"
                             }
                         ]
                     },
@@ -108,11 +114,13 @@
                         "question_id": [
                             {
                                 "answer": "Nonsense",
+                                "correct": true,
                                 "id": 25,
                                 "response": "Correct! It's nonsense! In SKILLZ Street, you will play soccer at every SKILLZ Street practice!"
                             },
                             {
                                 "answer": "Fact",
+                                "correct": false,
                                 "id": 24,
                                 "response": "Aish, sisi! In SKILLZ Street, we do not play netball, we play soccer! You will play soccer at every SKILLZ Street practice!"
                             }
@@ -120,15 +128,17 @@
                     },
                     {
                         "id": 8,
-                        "question": "Fact or Nonsense: You shake it and don’t fake it in opening circle.",
+                        "question": "Fact or Nonsense: You shake it and don't fake it in opening circle.",
                         "question_id": [
                             {
                                 "answer": "Nonsense",
+                                "correct": false,
                                 "id": 23,
-                                "response": "Hey sisi, it's a fact! In SKILLZ Street, you will shake it and not fake it during opening circle! "
+                                "response": "Hey sisi, it's a fact! In SKILLZ Street, you will shake it and not fake it during opening circle!"
                             },
                             {
                                 "answer": "Fact",
+                                "correct": true,
                                 "id": 22,
                                 "response": "Correct! It's a fact! In SKILLZ Street, you will shake it and not fake it during opening circle!"
                             }
