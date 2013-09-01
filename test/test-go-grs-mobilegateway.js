@@ -630,9 +630,9 @@ describe("When using the USSD line as an registered user", function() {
         p.then(done, done);
     });
 
-    it.skip("hitting next to question 5 response shows 3 out of 5 result", function (done) {
+    it("hitting next to question 5 response shows 3 out of 5 result", function (done) {
         var user = {
-            current_state: 'quiz_4_12',
+            current_state: 'quiz_4_12_31',
             answers: {
                 first_state: 'quiz_choose',
                 quiz_choose: 'quiz_4_start',
@@ -650,12 +650,43 @@ describe("When using the USSD line as an registered user", function() {
         };
         var p = tester.check_state({
             user: user,
-            content: "2",
+            content: "1",
             next_state: "quiz_4_end",
             response: (
-                "You got 3/5. You can bounce back! Take the quiz again to improve " +
+                "You got 3\\/5. You can bounce back! Take the quiz again to improve " +
                 "your score.[^]" +
                 "1. Go back to Coach Tumi's quizzes$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing to go back to quizzes shows list", function (done) {
+        var user = {
+            current_state: 'quiz_4_end',
+            answers: {
+                first_state: 'quiz_choose',
+                quiz_choose: 'quiz_4_start',
+                quiz_4_start: 'quiz_4_8',
+                quiz_4_8: 'quiz_4_8_22',
+                quiz_4_8_22: 'true',
+                quiz_4_9: 'quiz_4_9_24',
+                quiz_4_9_24: 'false',
+                quiz_4_10: 'quiz_4_10_26',
+                quiz_4_10_26: 'true',
+                quiz_4_11: 'quiz_4_11_28',
+                quiz_4_11_28: 'true',
+                quiz_4_12: 'quiz_4_12_31',
+                quiz_4_12_31: 'false'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "quiz_choose",
+            response: (
+                "^Welcome sisi! Take one of Coach Tumi's quizzes![^]" +
+                "1. SKILLZ Street Quiz!$"
             )
         });
         p.then(done, done);
