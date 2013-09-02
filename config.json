@@ -1,0 +1,4 @@
+{
+    "user_store": "grs_ussd_production",
+    "cms_api_root": "http://gateway.grs.westerncapelabs.com/api/v1/"
+}
