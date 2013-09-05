@@ -13,7 +13,7 @@
             {
                 "active": true, 
                 "description": "Welcome to Coach Tumi's SKILLZ Street Quiz!",
-                "fr_quiz_id": [
+                "final_responses": [
                     {
                         "for_total": 5,
                         "id": 11,
@@ -53,11 +53,11 @@
                 ],
                 "id": 4,
                 "name": "SKILLZ Street Quiz!",
-                "q_quiz_id": [
+                "questions": [
                     {
                         "id": 12,
                         "question": "Fact or Nonsense: You can talk with your SKILLZ Street coach about important things in your life.",
-                        "question_id": [
+                        "answers": [
                             {
                                 "answer": "Nonsense",
                                 "correct": false,
@@ -75,7 +75,7 @@
                     {
                         "id": 11,
                         "question": "Fact or Nonsense: You can dial Coach Tumi to get important information about health services and youth centres in Soweto.",
-                        "question_id": [
+                        "answers": [
                             {
                                 "answer": "Nonsense",
                                 "correct": false,
@@ -93,7 +93,7 @@
                     {
                         "id": 10,
                         "question": "Fact or Nonsense: SKILLZ Street coaches are the coolest!",
-                        "question_id": [
+                        "answers": [
                             {
                                 "answer": "Nonsense",
                                 "correct": false,
@@ -111,7 +111,7 @@
                     {
                         "id": 9,
                         "question": "Fact or Nonsense: You will play netball in SKILLZ Street.",
-                        "question_id": [
+                        "answers": [
                             {
                                 "answer": "Nonsense",
                                 "correct": true,
@@ -129,7 +129,7 @@
                     {
                         "id": 8,
                         "question": "Fact or Nonsense: You shake it and don't fake it in opening circle.",
-                        "question_id": [
+                        "answers": [
                             {
                                 "answer": "Nonsense",
                                 "correct": false,
