@@ -1,0 +1,21 @@
+{
+    "url": "http://qa/api/v1/users/",
+    "method": "POST",
+    "content_type": "application/json",
+    "data": {
+        "msisdn":"1234567",
+        "gender":"female",
+        "age":"12",
+        "grade":"6",
+        "community":"Snake Park"
+    },
+    "body": {
+        "age": "12",
+        "community": "Snake Park",
+        "created_at": "2013-09-05T08:50:24.780636",
+        "id": 1,
+        "msisdn": "1234567",
+        "resource_uri": "/api/v1/users/1/",
+        "sex": "female"
+    }
+}

@@ -21,7 +21,9 @@ describe("test_api", function() {
 // These are used to mock API reponses
 // EXAMPLE: Response from google maps API
 var test_fixtures_full = [
-    "test/fixtures/quiz.json"
+    "test/fixtures/quiz.json",
+    "test/fixtures/user_register_female.json",
+    "test/fixtures/user_register_male.json",
 ];
 
 var tester;
