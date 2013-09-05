@@ -37,7 +37,8 @@ describe("When using the USSD line as an un registered user", function() {
                 api.config_store.config = JSON.stringify({
                     cms_api_root: 'http://qa/api/v1/',
                     testing: true,
-                    testing_mock_today: [2013,4,8,11,11]
+                    testing_mock_today: [2013,4,8,11,11],
+                    sms_tag: ['pool', 'addr']
                 });
 
                 var dummy_contact = {
@@ -267,7 +268,8 @@ describe("When using the USSD line as an registered user", function() {
                 api.config_store.config = JSON.stringify({
                     cms_api_root: 'http://qa/api/v1/',
                     testing: true,
-                    testing_mock_today: [2013,4,8,11,11]
+                    testing_mock_today: [2013,4,8,11,11],
+                    sms_tag: ['pool', 'addr']
                 });
 
                 var dummy_contact = {
@@ -707,7 +709,8 @@ describe("When using the USSD line as an registered user with no quizzes", funct
                 api.config_store.config = JSON.stringify({
                     cms_api_root: 'http://qa/api/v1/',
                     testing: true,
-                    testing_mock_today: [2013,4,8,11,11]
+                    testing_mock_today: [2013,4,8,11,11],
+                    sms_tag: ['pool', 'addr']
                 });
 
                 var dummy_contact = {
