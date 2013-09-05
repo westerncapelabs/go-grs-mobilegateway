@@ -4,7 +4,7 @@
     "content_type": "application/json",
     "data": {
         "msisdn":"1234567",
-        "gender":"female",
+        "sex":"female",
         "age":"12",
         "grade":"6",
         "community":"Snake Park"
