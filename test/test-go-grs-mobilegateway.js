@@ -302,6 +302,16 @@ describe("When using the USSD line as an registered user", function() {
         });
     });
 
+    var assert_single_sms = function(to_addr, content) {
+        var teardown = function(api) {
+            var sms = api.outbound_sends[0];
+            assert.equal(api.outbound_sends.length, 1);
+            assert.equal(sms.to_addr, to_addr);
+            assert.equal(sms.content, content);
+        };
+        return teardown;
+    };
+
     // first test should always start 'null, null' because we haven't
     // started interacting yet
     it("should be shown main menu", function (done) {
@@ -659,8 +669,10 @@ describe("When using the USSD line as an registered user", function() {
             response: (
                 "You got 3\\/5. You can bounce back! Take the quiz again to improve " +
                 "your score.[^]" +
-                "1. Go back to Coach Tumi's quizzes$"
-            )
+                "1. Go back to Coach Tumi's quizzes$"),
+            teardown: assert_single_sms("1234567", "Hey sisi! SKILLZ Street is a programme for girls. " +
+            "You will play soccer, dance, sing, laugh, make friends, and discuss things that " +
+            "are important to YOU!")
         });
         p.then(done, done);
     });
