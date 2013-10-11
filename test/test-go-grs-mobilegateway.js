@@ -716,13 +716,176 @@ describe("When using the USSD line as an registered user", function() {
         p.then(done, done);
     });
 
-    it("choosing services should show list", function (done) {
+    it("choosing services should show opt-in", function (done) {
         var user = {
             current_state: 'first_state'
         };
         var p = tester.check_state({
             user: user,
             content: "1",
+            next_state: "opt_in_sms_services",
+            response: (
+                "^Do you want to receive a free SMS with a copy of the services info " +
+                    "for the categories you look at\\?[^]" +
+                "1. Yes, send SMS too[^]" +
+                "2. No, just on-screen$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing opt-in should show services", function (done) {
+        var user = {
+            current_state: 'opt_in_sms_services',
+            answers: {
+                first_state: 'opt_in_sms_services'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "services",
+            response: (
+                "^Choose a service:[^]" +
+                "1. Healthcare[^]" +
+                "2. Sports[^]" +
+                "3. Back to main menu$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing back to main menu should show", function (done) {
+        var user = {
+            current_state: 'services',
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "3",
+            next_state: "first_state",
+            response: (
+                "^How can Coach Tumi help you\\?[^]" +
+                "1. Get contact info about local health services or " +
+                "youth centres[^]" +
+                "2. Take a Coach Tumi quiz to test your knowledge about SKILLZ " +
+                "Street$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing healthcare should show second level options", function (done) {
+        var user = {
+            current_state: 'services',
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "category_1_start",
+            response: (
+                "^Choose one:[^]" +
+                "1. Stormy close[^]" +
+                "2. Grassy Park[^]" +
+                "3. Back$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing Grassy park should show content page 1", function (done) {
+        var user = {
+            current_state: 'category_1_start',
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "category_1_1",
+            response: (
+                "^First page[^]" +
+                  "1 for prev, 2 for next, 0 to end.$"
+            ),
+            teardown: assert_single_sms("1234567", "First page, second page, third page. Thanks.")
+        });
+
+        p.then(done, done);
+    });
+
+    it("choosing 2 should show content page 2", function (done) {
+        var user = {
+            current_state: 'category_1_1',
+            pages: {
+                category_1_1: 0
+            },
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "category_1_1",
+            response: (
+                "^Second page[^]" +
+                  "1 for prev, 2 for next, 0 to end.$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing 2 should show content page 3", function (done) {
+        var user = {
+            current_state: 'category_1_1',
+            pages: {
+                category_1_1: 1
+            },
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "category_1_1",
+            response: (
+                "^Third page[^]" +
+                  "1 for prev, 2 for next, 0 to end.$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("choosing 0 should show services menu", function (done) {
+        var user = {
+            current_state: 'category_1_1',
+            pages: {
+                category_1_1: 1
+            },
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'yes',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "0",
             next_state: "services",
             response: (
                 "^Choose a service:[^]" +
