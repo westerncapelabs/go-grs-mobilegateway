@@ -898,6 +898,29 @@ describe("When using the USSD line as an registered user", function() {
         p.then(done, done);
     });
 
+    it("choosing Grassy park should show content page 1 (no SMS)", function (done) {
+        var user = {
+            current_state: 'category_1_start',
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'no',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "category_1_1",
+            response: (
+                "^First page[^]" +
+                  "1 for prev, 2 for next, 0 to end.$"
+            ),
+            teardown: assert_no_sms("1234567", "First page, second page, third page. Thanks.")
+        });
+
+        p.then(done, done);
+    });
+
     it("choosing 2 should show content page 2", function (done) {
         var user = {
             current_state: 'category_1_1',
