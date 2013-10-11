@@ -24,6 +24,13 @@ var test_fixtures_full = [
     "test/fixtures/quiz.json",
     "test/fixtures/user_register_female.json",
     "test/fixtures/user_register_male.json",
+    "test/fixtures/quiz_submit.json",
+    "test/fixtures/quiz_submit_2.json",
+    "test/fixtures/quiz_submit_3.json",
+    "test/fixtures/quiz_submit_4.json",
+    "test/fixtures/quiz_submit_5.json",
+    "test/fixtures/quiz_submit_6.json",
+    "test/fixtures/quiz_submit_7.json",
 ];
 
 var tester;
