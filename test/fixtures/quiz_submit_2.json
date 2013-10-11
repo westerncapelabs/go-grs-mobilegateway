@@ -1,0 +1,78 @@
+{
+    "url": "http://qa/api/v1/quizresponses/",
+    "method": "POST",
+    "content_type": "application/json",
+    "data": {
+        "correct": false,
+        "created_by": "/api/v1/users/?msisdn=1234567",
+        "question": "/api/v1/question/8/",
+        "question_text": "Fact or Nonsense: You shake it and don't fake it in opening circle.",
+        "quiz": "/api/v1/quiz/4/"
+    },
+    "body": {
+        "correct": true,
+        "created_at": "2013-10-10T21:19:05.592721",
+        "created_by": {
+            "age": "11",
+            "community": "Snake Park",
+            "created_at": "2013-10-10T21:18:53.192620",
+            "grade": "7",
+            "id": 1,
+            "msisdn": "+1234567",
+            "resource_uri": "/api/v1/users/1/",
+            "sex": "male"
+        },
+        "id": 1,
+        "question": {
+            "answers": [
+                {
+                    "answer": "No!",
+                    "correct": false,
+                    "id": 2,
+                    "response": "What?"
+                },
+                {
+                    "answer": "Yes!",
+                    "correct": true,
+                    "id": 1,
+                    "response": "Well done"
+                }
+            ],
+            "id": 1,
+            "question": "Is one a 1?",
+            "resource_uri": "/api/v1/question/1/"
+        },
+        "question_text": "Is 1 a one?",
+        "quiz": {
+            "active": true,
+            "description": "Test quiz",
+            "final_responses": [],
+            "id": 1,
+            "name": "First",
+            "questions": [
+                {
+                    "answers": [
+                        {
+                            "answer": "No!",
+                            "correct": false,
+                            "id": 2,
+                            "response": "What?"
+                        },
+                        {
+                            "answer": "Yes!",
+                            "correct": true,
+                            "id": 1,
+                            "response": "Well done"
+                        }
+                    ],
+                    "id": 1,
+                    "question": "Is one a 1?",
+                    "resource_uri": "/api/v1/question/1/"
+                }
+            ],
+            "resource_uri": "/api/v1/quiz/1/",
+            "updated_at": "2013-10-10T21:17:50.941751"
+        },
+        "resource_uri": "/api/v1/quizresponses/1/"
+    }
+}
