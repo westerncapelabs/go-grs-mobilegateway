@@ -320,6 +320,14 @@ describe("When using the USSD line as an registered user", function() {
         return teardown;
     };
 
+    var assert_no_sms = function(to_addr, content) {
+        var teardown = function(api) {
+            var sms = api.outbound_sends[0];
+            assert.equal(api.outbound_sends.length, 0);
+        };
+        return teardown;
+    };
+
     // first test should always start 'null, null' because we haven't
     // started interacting yet
     it("should be shown main menu", function (done) {
@@ -652,9 +660,40 @@ describe("When using the USSD line as an registered user", function() {
         p.then(done, done);
     });
 
-    it("hitting next to question 5 response shows 3 out of 5 result", function (done) {
+    it("finishing quiz should show opt-in", function (done) {
         var user = {
             current_state: 'quiz_4_12_31',
+            answers: {
+                first_state: 'quiz_choose',
+                quiz_choose: 'quiz_4_start',
+                quiz_4_start: 'quiz_4_8',
+                quiz_4_8: 'quiz_4_8_22',
+                quiz_4_8_22: 'true',
+                quiz_4_9: 'quiz_4_9_24',
+                quiz_4_9_24: 'false',
+                quiz_4_10: 'quiz_4_10_26',
+                quiz_4_10_26: 'true',
+                quiz_4_11: 'quiz_4_11_28',
+                quiz_4_11_28: 'true',
+                quiz_4_12: 'quiz_4_12_31'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "quiz_4_opt_in_sms_quiz",
+            response: (
+                "^Do you want to receive a free SMS with your results and top tips\\?[^]" +
+                "1. Yes, send SMS too[^]" +
+                "2. No, just on-screen$"
+            )
+        });
+        p.then(done, done);
+    });
+
+    it("replying yes to SMS response shows 3 out of 5 result and sends SMS", function (done) {
+        var user = {
+            current_state: 'quiz_4_opt_in_sms_quiz',
             answers: {
                 first_state: 'quiz_choose',
                 quiz_choose: 'quiz_4_start',
@@ -679,6 +718,39 @@ describe("When using the USSD line as an registered user", function() {
                 "your score.[^]" +
                 "1. Go back to main menu$"),
             teardown: assert_single_sms("1234567", "Hey sisi! SKILLZ Street is a programme for girls. " +
+            "You will play soccer, dance, sing, laugh, make friends, and discuss things that " +
+            "are important to YOU!")
+        });
+        p.then(done, done);
+    });
+
+    it("replying no to SMS response shows 3 out of 5 result and does not send SMS", function (done) {
+        var user = {
+            current_state: 'quiz_4_opt_in_sms_quiz',
+            answers: {
+                first_state: 'quiz_choose',
+                quiz_choose: 'quiz_4_start',
+                quiz_4_start: 'quiz_4_8',
+                quiz_4_8: 'quiz_4_8_22',
+                quiz_4_8_22: 'true',
+                quiz_4_9: 'quiz_4_9_24',
+                quiz_4_9_24: 'false',
+                quiz_4_10: 'quiz_4_10_26',
+                quiz_4_10_26: 'true',
+                quiz_4_11: 'quiz_4_11_28',
+                quiz_4_11_28: 'true',
+                quiz_4_12: 'quiz_4_12_31'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "quiz_4_end",
+            response: (
+                "You got 3\\/5. You can bounce back! Take the quiz again to improve " +
+                "your score.[^]" +
+                "1. Go back to main menu$"),
+            teardown: assert_no_sms("1234567", "Hey sisi! SKILLZ Street is a programme for girls. " +
             "You will play soccer, dance, sing, laugh, make friends, and discuss things that " +
             "are important to YOU!")
         });
@@ -821,6 +893,29 @@ describe("When using the USSD line as an registered user", function() {
                   "1 for prev, 2 for next, 0 to end.$"
             ),
             teardown: assert_single_sms("1234567", "First page, second page, third page. Thanks.")
+        });
+
+        p.then(done, done);
+    });
+
+    it("choosing Grassy park should show content page 1 (no SMS)", function (done) {
+        var user = {
+            current_state: 'category_1_start',
+            answers: {
+                first_state: 'opt_in_sms_services',
+                opt_in_sms_services: 'no',
+                services: 'category_1_start'
+            }
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "2",
+            next_state: "category_1_1",
+            response: (
+                "^First page[^]" +
+                  "1 for prev, 2 for next, 0 to end.$"
+            ),
+            teardown: assert_no_sms("1234567", "First page, second page, third page. Thanks.")
         });
 
         p.then(done, done);
