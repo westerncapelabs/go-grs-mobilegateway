@@ -31,6 +31,7 @@ var test_fixtures_full = [
     "test/fixtures/quiz_submit_5.json",
     "test/fixtures/quiz_submit_6.json",
     "test/fixtures/quiz_submit_7.json",
+    "test/fixtures/services.json",
 ];
 
 var tester;
@@ -714,6 +715,25 @@ describe("When using the USSD line as an registered user", function() {
         });
         p.then(done, done);
     });
+
+    it("choosing services should show list", function (done) {
+        var user = {
+            current_state: 'first_state'
+        };
+        var p = tester.check_state({
+            user: user,
+            content: "1",
+            next_state: "services",
+            response: (
+                "^Choose a service:[^]" +
+                "1. Healthcare[^]" +
+                "2. Sports[^]" +
+                "3. Back to main menu$"
+            )
+        });
+        p.then(done, done);
+    });
+
 
 });
 

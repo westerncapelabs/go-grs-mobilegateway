@@ -1,0 +1,61 @@
+{
+    "url": "http://qa/api/v1/category/",
+    "method": "GET",
+    "body": {
+        "meta": {
+            "limit": 20,
+            "next": null,
+            "offset": 0,
+            "previous": null,
+            "total_count": 2
+        },
+        "objects": [
+            {
+                "category": [
+                    {
+                        "content_1": "1st page again",
+                        "content_2": "2nd page again",
+                        "content_3": "3rd page again",
+                        "id": 2,
+                        "name": "Stormy close",
+                        "sms": "1st page again, 2nd page again, 3rd page again"
+                    },
+                    {
+                        "content_1": "First page",
+                        "content_2": "Second page",
+                        "content_3": "Third page",
+                        "id": 1,
+                        "name": "Grassy Park",
+                        "sms": "First page, second page, third page. Thanks."
+                    }
+                ],
+                "id": 1,
+                "name": "Healthcare",
+                "resource_uri": "/api/v1/category/1/"
+            },
+            {
+                "category": [
+                    {
+                        "content_1": "Posts",
+                        "content_2": "Bibs",
+                        "content_3": "Balls",
+                        "id": 4,
+                        "name": "Netball",
+                        "sms": "Posts, bibs, balls. Thanks."
+                    },
+                    {
+                        "content_1": "Balls",
+                        "content_2": "Pitches",
+                        "content_3": "Nets",
+                        "id": 3,
+                        "name": "Football",
+                        "sms": "Balls, pitches, nets. Thanks."
+                    }
+                ],
+                "id": 2,
+                "name": "Sports",
+                "resource_uri": "/api/v1/category/2/"
+            }
+        ]
+    }
+}
