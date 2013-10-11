@@ -677,7 +677,7 @@ describe("When using the USSD line as an registered user", function() {
             response: (
                 "You got 3\\/5. You can bounce back! Take the quiz again to improve " +
                 "your score.[^]" +
-                "1. Go back to Coach Tumi's quizzes$"),
+                "1. Go back to main menu$"),
             teardown: assert_single_sms("1234567", "Hey sisi! SKILLZ Street is a programme for girls. " +
             "You will play soccer, dance, sing, laugh, make friends, and discuss things that " +
             "are important to YOU!")
@@ -685,7 +685,7 @@ describe("When using the USSD line as an registered user", function() {
         p.then(done, done);
     });
 
-    it("choosing to go back to quizzes shows list", function (done) {
+    it("choosing to go back to main menu shows it", function (done) {
         var user = {
             current_state: 'quiz_4_end',
             answers: {
@@ -707,10 +707,13 @@ describe("When using the USSD line as an registered user", function() {
         var p = tester.check_state({
             user: user,
             content: "1",
-            next_state: "quiz_choose",
+            next_state: "first_state",
             response: (
-                "^Welcome sisi! Take one of Coach Tumi's quizzes![^]" +
-                "1. SKILLZ Street Quiz!$"
+                "^How can Coach Tumi help you\\?[^]" +
+                "1. Get contact info about local health services or " +
+                "youth centres[^]" +
+                "2. Take a Coach Tumi quiz to test your knowledge about SKILLZ " +
+                "Street$"
             )
         });
         p.then(done, done);
